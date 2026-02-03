@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="lenis lenis-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,13 +8,14 @@
     
     <!-- Open Graph -->
     <meta property="og:title" content="Day-0 Foundry | Start Before Day One">
-    <meta property="og:description" content="Build AI-first companies in 90 days. No pitch decks. Real products. Real customers.">
+    <meta property="og:description" content="We build AI-first companies in 90 days. No pitch decks. Real products. Real customers.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://day0foundry.com">
+    <meta property="og:image" content="https://day0foundry.com/og-image.png">
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Day-0 Foundry | Start Before Day One">
+    <meta name="twitter:title" content="Day-0 Foundry | AI-First Company Building">
     <meta name="twitter:description" content="Build AI-first companies in 90 days.">
     
     <!-- Favicon -->
@@ -23,7 +24,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -33,69 +34,82 @@
                 extend: {
                     fontFamily: {
                         sans: ['Inter', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
                     },
                     colors: {
-                        dark: {
-                            DEFAULT: '#0A0A0A',
-                            50: '#141414',
-                            100: '#1A1A1A',
-                            200: '#262626',
-                        },
-                        accent: {
-                            DEFAULT: '#00D4FF',
-                            dark: '#0099CC',
-                            glow: 'rgba(0, 212, 255, 0.15)',
-                        },
-                        purple: {
-                            DEFAULT: '#7C3AED',
-                            glow: 'rgba(124, 58, 237, 0.15)',
-                        }
-                    },
-                    animation: {
-                        'gradient': 'gradient 8s ease infinite',
-                        'float': 'float 6s ease-in-out infinite',
-                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
-                        'fade-in-up': 'fade-in-up 0.8s ease-out forwards',
-                    },
-                    keyframes: {
-                        gradient: {
-                            '0%, 100%': { backgroundPosition: '0% 50%' },
-                            '50%': { backgroundPosition: '100% 50%' },
-                        },
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-20px)' },
-                        },
-                        'pulse-glow': {
-                            '0%, 100%': { boxShadow: '0 0 20px rgba(0, 212, 255, 0.3)' },
-                            '50%': { boxShadow: '0 0 40px rgba(0, 212, 255, 0.6)' },
-                        },
-                        'fade-in-up': {
-                            '0%': { opacity: '0', transform: 'translateY(30px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        }
+                        dark: { DEFAULT: '#0A0A0A', 50: '#141414', 100: '#1A1A1A', 200: '#262626' },
+                        accent: { DEFAULT: '#00D4FF', dark: '#0099CC', glow: 'rgba(0, 212, 255, 0.15)' },
+                        purple: { DEFAULT: '#7C3AED', glow: 'rgba(124, 58, 237, 0.15)' }
                     }
                 }
             }
         }
     </script>
     
-    <!-- Custom Styles -->
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/effects.css">
+    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* Critical inline styles */
+        .hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
         }
         
-        body {
-            background-color: #0A0A0A;
-            color: #FAFAFA;
-            font-family: 'Inter', system-ui, sans-serif;
-            overflow-x: hidden;
+        .hero-content {
+            position: relative;
+            z-index: 10;
         }
         
-        /* Noise texture overlay */
+        .gradient-orb {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.12) 0%, rgba(124, 58, 237, 0.08) 50%, transparent 70%);
+            filter: blur(80px);
+            animation: float 8s ease-in-out infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(10deg); }
+        }
+        
+        .cursor-glow {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, #00D4FF 0%, #7C3AED 50%, #00D4FF 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 4s ease infinite;
+        }
+        
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Noise overlay */
         body::before {
             content: '';
             position: fixed;
@@ -104,239 +118,150 @@
             width: 100%;
             height: 100%;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            opacity: 0.03;
+            opacity: 0.02;
             pointer-events: none;
             z-index: 1000;
         }
         
-        /* Gradient orb */
-        .gradient-orb {
-            position: absolute;
-            width: 600px;
-            height: 600px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, rgba(124, 58, 237, 0.1) 50%, transparent 70%);
-            filter: blur(80px);
-            animation: float 8s ease-in-out infinite;
-        }
-        
-        /* Cursor glow */
-        .cursor-glow {
-            position: fixed;
-            width: 400px;
-            height: 400px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0, 212, 255, 0.08) 0%, transparent 70%);
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            z-index: 0;
-            transition: opacity 0.3s;
-        }
-        
-        /* Text gradient */
-        .text-gradient {
-            background: linear-gradient(135deg, #00D4FF 0%, #7C3AED 50%, #00D4FF 100%);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: gradient 4s ease infinite;
-        }
-        
-        /* Glowing border */
-        .glow-border {
-            position: relative;
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .glow-border:hover {
-            border-color: rgba(0, 212, 255, 0.3);
-            box-shadow: 0 0 30px rgba(0, 212, 255, 0.1);
-        }
-        
-        /* Button styles */
-        .btn-primary {
-            background: linear-gradient(135deg, #00D4FF 0%, #0099CC 100%);
-            color: #0A0A0A;
-            font-weight: 600;
-            padding: 16px 32px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            position: relative;
+        /* Logo wall */
+        .logo-scroll-container {
             overflow: hidden;
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
         }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.3);
+        .logo-scroll {
+            display: flex;
+            animation: scroll-logos 30s linear infinite;
         }
-        
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: 0.5s;
+        @keyframes scroll-logos {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
-        
-        .btn-primary:hover::before {
-            left: 100%;
+        .logo-item {
+            flex-shrink: 0;
+            padding: 0 40px;
+            opacity: 0.4;
+            filter: grayscale(100%);
+            transition: all 0.3s;
         }
-        
-        .btn-secondary {
-            background: transparent;
-            color: #FAFAFA;
-            font-weight: 500;
-            padding: 16px 32px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-        
-        .btn-secondary:hover {
-            border-color: rgba(0, 212, 255, 0.5);
-            background: rgba(0, 212, 255, 0.1);
-        }
-        
-        /* Section fade-in */
-        .section-hidden {
-            opacity: 0;
-            transform: translateY(50px);
-        }
-        
-        .section-visible {
+        .logo-item:hover {
             opacity: 1;
-            transform: translateY(0);
-            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+            filter: grayscale(0%);
         }
         
-        /* Timeline */
-        .timeline-item {
+        /* FAQ */
+        .faq-item { 
+            border: 1px solid rgba(255,255,255,0.08); 
+            border-radius: 12px;
+            background: rgba(20,20,20,0.5);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        .faq-question {
+            cursor: pointer;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+        .faq-item.open .faq-answer {
+            max-height: 300px;
+        }
+        .faq-icon {
+            width: 24px;
+            height: 24px;
             position: relative;
-            padding-left: 30px;
+            transition: transform 0.3s;
         }
-        
-        .timeline-item::before {
+        .faq-item.open .faq-icon {
+            transform: rotate(45deg);
+        }
+        .faq-icon::before, .faq-icon::after {
             content: '';
             position: absolute;
-            left: 0;
-            top: 8px;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
             background: #00D4FF;
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
         }
-        
-        .timeline-item::after {
-            content: '';
-            position: absolute;
-            left: 5px;
-            top: 24px;
+        .faq-icon::before {
+            width: 14px;
+            height: 2px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .faq-icon::after {
             width: 2px;
-            height: calc(100% - 24px);
-            background: linear-gradient(to bottom, #00D4FF, transparent);
-        }
-        
-        .timeline-item:last-child::after {
-            display: none;
-        }
-        
-        /* Card tilt effect */
-        .tilt-card {
-            transform-style: preserve-3d;
-            transition: transform 0.3s ease;
-        }
-        
-        /* Navigation glass effect */
-        .nav-glass {
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: #0A0A0A;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: #262626;
-            border-radius: 4px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: #404040;
-        }
-        
-        /* Counter animation number */
-        .counter {
-            font-variant-numeric: tabular-nums;
+            height: 14px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
     </style>
 </head>
-<body>
+<body class="bg-dark text-white antialiased">
+    <!-- Scroll Progress -->
+    <div class="scroll-progress">
+        <div class="scroll-progress-bar"></div>
+    </div>
+    
     <!-- Cursor Glow -->
     <div class="cursor-glow" id="cursorGlow"></div>
     
     <!-- Navigation -->
-    <nav class="nav-glass fixed top-0 left-0 right-0 z-50 px-6 py-4">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <a href="#" class="flex items-center gap-2 group">
+    <nav class="nav fixed top-0 left-0 right-0 z-50 px-6 py-4 transition-all">
+        <div class="nav-inner max-w-7xl mx-auto flex items-center justify-between">
+            <a href="#" class="nav-logo flex items-center gap-2 group">
                 <span class="text-2xl">⚡</span>
                 <span class="font-bold text-xl tracking-tight group-hover:text-accent transition-colors">Day-0</span>
             </a>
             <div class="hidden md:flex items-center gap-8">
-                <a href="#how-it-works" class="text-sm text-gray-400 hover:text-white transition-colors">How it Works</a>
-                <a href="#for-solopreneurs" class="text-sm text-gray-400 hover:text-white transition-colors">For Solopreneurs</a>
-                <a href="#about" class="text-sm text-gray-400 hover:text-white transition-colors">About</a>
-                <a href="#apply" class="btn-primary text-sm !py-3 !px-6">Apply Now →</a>
+                <a href="#how-it-works" class="nav-link text-sm text-gray-400 hover:text-white transition-colors">How it Works</a>
+                <a href="#for-solopreneurs" class="nav-link text-sm text-gray-400 hover:text-white transition-colors">For Solopreneurs</a>
+                <a href="#faq" class="nav-link text-sm text-gray-400 hover:text-white transition-colors">FAQ</a>
+                <div class="magnetic-wrap">
+                    <a href="#apply" class="btn btn-primary text-sm py-3 px-6">Apply Now →</a>
+                </div>
             </div>
-            <button class="md:hidden text-white" id="mobileMenuBtn">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                </svg>
-            </button>
         </div>
     </nav>
     
-    <!-- Hero Section -->
-    <section class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
-        <!-- Background Elements -->
+    <!-- HERO SECTION -->
+    <section class="hero min-h-screen flex items-center justify-center relative overflow-hidden pt-20" id="hero">
+        <!-- 3D Canvas -->
+        <div class="hero-canvas" id="heroCanvas"></div>
+        
+        <!-- Background Orbs -->
         <div class="gradient-orb top-1/4 -left-64"></div>
         <div class="gradient-orb bottom-1/4 -right-64" style="animation-delay: -4s;"></div>
         
-        <div class="max-w-6xl mx-auto px-6 text-center relative z-10">
+        <div class="hero-content max-w-6xl mx-auto px-6 text-center">
             <div class="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 text-sm text-gray-400">
                 <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
                 Applications open for Q1 2026
             </div>
             
-            <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-6 hero-title">
+            <h1 class="hero-title text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-6">
                 Start at <span class="text-gradient">Day-0</span>
             </h1>
             
-            <p class="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-4 hero-subtitle">
+            <p class="hero-subtitle text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-4">
                 Build before Day One.
             </p>
             
-            <p class="text-lg md:text-xl text-gray-500 max-w-2xl mx-auto mb-12 hero-desc">
+            <p class="hero-desc text-lg md:text-xl text-gray-500 max-w-2xl mx-auto mb-12">
                 We build AI-first companies in 90 days.<br>
                 No pitch decks. Real products. Real customers.
             </p>
             
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 hero-cta">
-                <a href="#apply" class="btn-primary text-lg">Apply as Solopreneur</a>
-                <a href="#how-it-works" class="btn-secondary text-lg">Learn More ↓</a>
+            <div class="hero-cta flex flex-col sm:flex-row items-center justify-center gap-4">
+                <div class="magnetic-wrap">
+                    <a href="#apply" class="btn btn-primary text-lg px-8 py-4">Apply as Solopreneur</a>
+                </div>
+                <a href="#how-it-works" class="btn btn-secondary text-lg px-8 py-4">Learn More ↓</a>
             </div>
         </div>
         
@@ -348,29 +273,55 @@
         </div>
     </section>
     
-    <!-- Problem Section -->
-    <section class="py-32 relative section-hidden" id="problem">
+    <!-- LOGO WALL -->
+    <section class="py-16 border-b border-white/5">
+        <div class="max-w-6xl mx-auto px-6 text-center mb-8">
+            <p class="text-sm text-gray-500 uppercase tracking-wider">Backed by visionaries from</p>
+        </div>
+        <div class="logo-scroll-container">
+            <div class="logo-scroll">
+                <div class="logo-item h-8 flex items-center"><span class="text-2xl font-bold text-gray-400">YC</span></div>
+                <div class="logo-item h-8 flex items-center"><span class="text-xl font-bold text-gray-400">a]6z</span></div>
+                <div class="logo-item h-8 flex items-center"><span class="text-xl font-bold text-gray-400">Sequoia</span></div>
+                <div class="logo-item h-8 flex items-center"><span class="text-xl font-bold text-gray-400">Founders Fund</span></div>
+                <div class="logo-item h-8 flex items-center"><span class="text-xl font-bold text-gray-400">Index</span></div>
+                <div class="logo-item h-8 flex items-center"><span class="text-xl font-bold text-gray-400">Accel</span></div>
+                <!-- Duplicate for infinite scroll -->
+                <div class="logo-item h-8 flex items-center"><span class="text-2xl font-bold text-gray-400">YC</span></div>
+                <div class="logo-item h-8 flex items-center"><span class="text-xl font-bold text-gray-400">a]6z</span></div>
+                <div class="logo-item h-8 flex items-center"><span class="text-xl font-bold text-gray-400">Sequoia</span></div>
+                <div class="logo-item h-8 flex items-center"><span class="text-xl font-bold text-gray-400">Founders Fund</span></div>
+                <div class="logo-item h-8 flex items-center"><span class="text-xl font-bold text-gray-400">Index</span></div>
+                <div class="logo-item h-8 flex items-center"><span class="text-xl font-bold text-gray-400">Accel</span></div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- PROBLEM SECTION -->
+    <section class="section py-32 relative" data-animate id="problem">
         <div class="max-w-6xl mx-auto px-6">
-            <h2 class="text-3xl md:text-5xl font-bold text-center mb-6">
-                The startup game is <span class="text-red-500">broken</span>.
-            </h2>
-            <p class="text-gray-400 text-center text-lg max-w-2xl mx-auto mb-16">
-                Most startups die from overhead, not bad ideas.
-            </p>
+            <div class="section-header text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold mb-6">
+                    The startup game is <span class="text-red-500">broken</span>.
+                </h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                    Most startups die from overhead, not bad ideas.
+                </p>
+            </div>
             
             <div class="grid md:grid-cols-3 gap-6">
-                <div class="glow-border rounded-2xl p-8 text-center">
-                    <div class="text-5xl md:text-6xl font-bold text-gradient mb-2 counter" data-target="18">0</div>
+                <div class="card card-glass rounded-2xl p-8 text-center">
+                    <div class="text-5xl md:text-6xl font-bold text-gradient mb-2"><span data-counter="18">0</span></div>
                     <div class="text-xl text-gray-400">months</div>
                     <div class="text-sm text-gray-500 mt-2">average time to launch</div>
                 </div>
-                <div class="glow-border rounded-2xl p-8 text-center">
-                    <div class="text-5xl md:text-6xl font-bold text-gradient mb-2">$<span class="counter" data-target="500">0</span>k+</div>
+                <div class="card card-glass rounded-2xl p-8 text-center">
+                    <div class="text-5xl md:text-6xl font-bold text-gradient mb-2">$<span data-counter="500">0</span>k+</div>
                     <div class="text-xl text-gray-400">burned</div>
                     <div class="text-sm text-gray-500 mt-2">on operations & overhead</div>
                 </div>
-                <div class="glow-border rounded-2xl p-8 text-center">
-                    <div class="text-5xl md:text-6xl font-bold text-gradient mb-2"><span class="counter" data-target="90">0</span>%</div>
+                <div class="card card-glass rounded-2xl p-8 text-center">
+                    <div class="text-5xl md:text-6xl font-bold text-gradient mb-2"><span data-counter="90">0</span>%</div>
                     <div class="text-xl text-gray-400">fail</div>
                     <div class="text-sm text-gray-500 mt-2">before product-market fit</div>
                 </div>
@@ -378,86 +329,88 @@
         </div>
     </section>
     
-    <!-- Solution Section -->
-    <section class="py-32 relative section-hidden" id="solution">
+    <!-- SOLUTION SECTION -->
+    <section class="section py-32 relative" data-animate id="solution">
         <div class="max-w-6xl mx-auto px-6">
-            <h2 class="text-3xl md:text-5xl font-bold text-center mb-6">
-                Day-0 Foundry changes the equation.
-            </h2>
-            <p class="text-gray-400 text-center text-xl max-w-2xl mx-auto mb-16">
-                <span class="text-white font-semibold">You execute.</span> We handle everything else.
-            </p>
+            <div class="section-header text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold mb-6">
+                    Day-0 Foundry changes the equation.
+                </h2>
+                <p class="text-gray-400 text-xl max-w-2xl mx-auto">
+                    <span class="text-white font-semibold">You execute.</span> We handle everything else.
+                </p>
+            </div>
             
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div class="glow-border rounded-xl p-6 hover:scale-[1.02] transition-transform">
+            <div class="bento-grid">
+                <div class="card card-glass rounded-xl p-6 hover:scale-[1.02] transition-transform">
                     <div class="text-3xl mb-4">🤖</div>
                     <h3 class="font-semibold text-lg mb-2">AI Tooling</h3>
-                    <p class="text-gray-400 text-sm">Custom models, automation, token budgets. All included.</p>
+                    <p class="text-gray-400 text-sm">Custom models, automation, token budgets. The full AI stack.</p>
                 </div>
-                <div class="glow-border rounded-xl p-6 hover:scale-[1.02] transition-transform">
+                <div class="card card-glass rounded-xl p-6 hover:scale-[1.02] transition-transform">
                     <div class="text-3xl mb-4">📈</div>
                     <h3 class="font-semibold text-lg mb-2">Sales & Marketing</h3>
                     <p class="text-gray-400 text-sm">Playbooks, campaigns, CRM. Revenue from day one.</p>
                 </div>
-                <div class="glow-border rounded-xl p-6 hover:scale-[1.02] transition-transform">
+                <div class="card card-glass rounded-xl p-6 hover:scale-[1.02] transition-transform">
                     <div class="text-3xl mb-4">⚖️</div>
                     <h3 class="font-semibold text-lg mb-2">Legal & Compliance</h3>
-                    <p class="text-gray-400 text-sm">Contracts, incorporation, IP protection. Covered.</p>
+                    <p class="text-gray-400 text-sm">Contracts, incorporation, IP protection.</p>
                 </div>
-                <div class="glow-border rounded-xl p-6 hover:scale-[1.02] transition-transform">
+                <div class="card card-glass rounded-xl p-6 hover:scale-[1.02] transition-transform">
                     <div class="text-3xl mb-4">💰</div>
-                    <h3 class="font-semibold text-lg mb-2">Finance & Accounting</h3>
-                    <p class="text-gray-400 text-sm">Books, taxes, treasury. Zero headache.</p>
+                    <h3 class="font-semibold text-lg mb-2">Finance</h3>
+                    <p class="text-gray-400 text-sm">Books, taxes, treasury management.</p>
                 </div>
-                <div class="glow-border rounded-xl p-6 hover:scale-[1.02] transition-transform">
+                <div class="card card-glass rounded-xl p-6 hover:scale-[1.02] transition-transform">
                     <div class="text-3xl mb-4">🚀</div>
-                    <h3 class="font-semibold text-lg mb-2">Growth Systems</h3>
+                    <h3 class="font-semibold text-lg mb-2">Growth</h3>
                     <p class="text-gray-400 text-sm">Proven frameworks to scale fast.</p>
                 </div>
-                <div class="glow-border rounded-xl p-6 hover:scale-[1.02] transition-transform">
+                <div class="card card-glass rounded-xl p-6 hover:scale-[1.02] transition-transform">
                     <div class="text-3xl mb-4">⚙️</div>
                     <h3 class="font-semibold text-lg mb-2">Operations</h3>
-                    <p class="text-gray-400 text-sm">HR, tools, processes. The boring stuff, handled.</p>
+                    <p class="text-gray-400 text-sm">HR, tools, processes. The boring stuff.</p>
                 </div>
             </div>
         </div>
     </section>
     
-    <!-- How it Works - Sprint Engine -->
-    <section class="py-32 relative section-hidden" id="how-it-works">
+    <!-- HOW IT WORKS - SPRINT ENGINE -->
+    <section class="section py-32 relative" data-animate id="how-it-works">
         <div class="max-w-6xl mx-auto px-6">
-            <h2 class="text-3xl md:text-5xl font-bold text-center mb-4">
-                90 days. One company.
-            </h2>
-            <p class="text-gray-400 text-center text-xl max-w-2xl mx-auto mb-16">
-                The Day-0 Sprint Engine
-            </p>
+            <div class="section-header text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">
+                    90 days. One company.
+                </h2>
+                <p class="text-gray-400 text-xl">The Day-0 Sprint Engine</p>
+            </div>
             
             <div class="grid md:grid-cols-2 gap-12 items-start">
-                <div class="space-y-8">
-                    <div class="timeline-item pb-8">
-                        <div class="text-accent font-mono text-sm mb-1">Phase 0 • Day 0-14</div>
-                        <h3 class="text-xl font-bold mb-2">Ideation & Match</h3>
-                        <p class="text-gray-400">Idea validation, market analysis, AI-leverage check. We match you with the right opportunity.</p>
-                    </div>
-                    <div class="timeline-item pb-8">
-                        <div class="text-accent font-mono text-sm mb-1">Phase 1 • Day 14-30</div>
-                        <h3 class="text-xl font-bold mb-2">MVP Build</h3>
-                        <p class="text-gray-400">Rapid prototyping with our tech team. Branding, landing page, working product.</p>
-                    </div>
-                    <div class="timeline-item pb-8">
-                        <div class="text-accent font-mono text-sm mb-1">Phase 2 • Day 30-60</div>
-                        <h3 class="text-xl font-bold mb-2">First Customers</h3>
-                        <p class="text-gray-400">Sales playbooks, outreach campaigns, paid tests. Real customers, real revenue.</p>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-phase">Phase 0 • Day 0-14</div>
+                        <h3 class="timeline-title">Ideation & Match</h3>
+                        <p class="timeline-desc">Idea validation, market analysis, AI-leverage check. We match you with the right opportunity.</p>
                     </div>
                     <div class="timeline-item">
-                        <div class="text-accent font-mono text-sm mb-1">Phase 3 • Day 60-90</div>
-                        <h3 class="text-xl font-bold mb-2">Scale or Kill</h3>
-                        <p class="text-gray-400">Data-driven decision. Scale with funding & team, or pivot to the next venture.</p>
+                        <div class="timeline-phase">Phase 1 • Day 14-30</div>
+                        <h3 class="timeline-title">MVP Build</h3>
+                        <p class="timeline-desc">Rapid prototyping with our tech team. Branding, landing page, working product.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-phase">Phase 2 • Day 30-60</div>
+                        <h3 class="timeline-title">First Customers</h3>
+                        <p class="timeline-desc">Sales playbooks, outreach campaigns, paid tests. Real customers, real revenue.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-phase">Phase 3 • Day 60-90</div>
+                        <h3 class="timeline-title">Scale or Kill</h3>
+                        <p class="timeline-desc">Data-driven decision. Scale with funding & team, or pivot to the next venture.</p>
                     </div>
                 </div>
                 
-                <div class="glow-border rounded-2xl p-8 sticky top-32">
+                <div class="card card-glass rounded-2xl p-8 sticky top-32">
                     <div class="text-6xl mb-4">⚡</div>
                     <h3 class="text-2xl font-bold mb-4">Why 90 days?</h3>
                     <p class="text-gray-400 mb-6">
@@ -487,15 +440,15 @@
         </div>
     </section>
     
-    <!-- For Solopreneurs -->
-    <section class="py-32 relative section-hidden" id="for-solopreneurs">
+    <!-- FOR SOLOPRENEURS -->
+    <section class="section py-32 relative" data-animate id="for-solopreneurs">
         <div class="max-w-6xl mx-auto px-6">
-            <h2 class="text-3xl md:text-5xl font-bold text-center mb-4">
-                You bring the hustle.
-            </h2>
-            <p class="text-gray-400 text-center text-xl max-w-2xl mx-auto mb-16">
-                We bring the system.
-            </p>
+            <div class="section-header text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">
+                    You bring the hustle.
+                </h2>
+                <p class="text-gray-400 text-xl">We bring the system.</p>
+            </div>
             
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div>
@@ -532,29 +485,14 @@
                     </ul>
                 </div>
                 
-                <div class="glow-border rounded-2xl p-8">
+                <div class="card card-glass rounded-2xl p-8">
                     <h3 class="text-xl font-bold mb-4">We're looking for:</h3>
                     <ul class="space-y-3 text-gray-300">
-                        <li class="flex items-center gap-2">
-                            <span class="text-accent">◆</span>
-                            Relentless executors, not dreamers
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <span class="text-accent">◆</span>
-                            AI-native thinkers
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <span class="text-accent">◆</span>
-                            Comfortable with ambiguity
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <span class="text-accent">◆</span>
-                            Obsessed with shipping
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <span class="text-accent">◆</span>
-                            Ready to go all-in
-                        </li>
+                        <li class="flex items-center gap-2"><span class="text-accent">◆</span> Relentless executors, not dreamers</li>
+                        <li class="flex items-center gap-2"><span class="text-accent">◆</span> AI-native thinkers</li>
+                        <li class="flex items-center gap-2"><span class="text-accent">◆</span> Comfortable with ambiguity</li>
+                        <li class="flex items-center gap-2"><span class="text-accent">◆</span> Obsessed with shipping</li>
+                        <li class="flex items-center gap-2"><span class="text-accent">◆</span> Ready to go all-in</li>
                     </ul>
                     <div class="mt-6 pt-6 border-t border-white/10">
                         <p class="text-sm text-gray-500">
@@ -566,30 +504,30 @@
         </div>
     </section>
     
-    <!-- Values -->
-    <section class="py-32 relative section-hidden" id="about">
+    <!-- VALUES -->
+    <section class="section py-32 relative" data-animate id="values">
         <div class="max-w-6xl mx-auto px-6">
-            <h2 class="text-3xl md:text-5xl font-bold text-center mb-16">
-                Our DNA
-            </h2>
+            <div class="section-header text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold">Our DNA</h2>
+            </div>
             
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="glow-border rounded-xl p-6 text-center hover:scale-105 transition-transform">
+                <div class="card card-glass rounded-xl p-6 text-center hover:scale-105 transition-transform">
                     <div class="text-4xl mb-4">🎯</div>
                     <h3 class="font-bold text-lg mb-2">Clarity</h3>
                     <p class="text-gray-400 text-sm">No ambiguity. Clear communication.</p>
                 </div>
-                <div class="glow-border rounded-xl p-6 text-center hover:scale-105 transition-transform">
+                <div class="card card-glass rounded-xl p-6 text-center hover:scale-105 transition-transform">
                     <div class="text-4xl mb-4">⚡</div>
                     <h3 class="font-bold text-lg mb-2">Speed</h3>
                     <p class="text-gray-400 text-sm">Fast decisions. Faster execution.</p>
                 </div>
-                <div class="glow-border rounded-xl p-6 text-center hover:scale-105 transition-transform">
+                <div class="card card-glass rounded-xl p-6 text-center hover:scale-105 transition-transform">
                     <div class="text-4xl mb-4">🔥</div>
                     <h3 class="font-bold text-lg mb-2">Ownership</h3>
                     <p class="text-gray-400 text-sm">Full responsibility. No excuses.</p>
                 </div>
-                <div class="glow-border rounded-xl p-6 text-center hover:scale-105 transition-transform">
+                <div class="card card-glass rounded-xl p-6 text-center hover:scale-105 transition-transform">
                     <div class="text-4xl mb-4">🚀</div>
                     <h3 class="font-bold text-lg mb-2">Execution</h3>
                     <p class="text-gray-400 text-sm">Results over ideas. Always.</p>
@@ -598,8 +536,80 @@
         </div>
     </section>
     
-    <!-- CTA Section -->
-    <section class="py-32 relative section-hidden" id="apply">
+    <!-- FAQ -->
+    <section class="section py-32 relative" data-animate id="faq">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="section-header text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">FAQ</h2>
+                <p class="text-gray-400">Common questions answered.</p>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span class="font-semibold">How much equity do I give up?</span>
+                        <div class="faq-icon"></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="px-6 pb-6 text-gray-400">
+                            Equity split depends on the venture and your contribution. Typically, solopreneurs retain significant ownership (30-50%) while Day-0 Foundry holds the majority. As you hit milestones, you can earn additional equity.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span class="font-semibold">Do I need a specific idea to apply?</span>
+                        <div class="faq-icon"></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="px-6 pb-6 text-gray-400">
+                            No. We often match talented operators with ideas from our pipeline. If you have an idea, great. If not, your execution skills matter more than your ideas.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span class="font-semibold">What happens after 90 days?</span>
+                        <div class="faq-icon"></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="px-6 pb-6 text-gray-400">
+                            If the venture shows traction (customers, revenue, growth), we scale it with additional funding and team members. If not, we kill it quickly and you can either take on a new venture or exit the program.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span class="font-semibold">Can I work on this part-time?</span>
+                        <div class="faq-icon"></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="px-6 pb-6 text-gray-400">
+                            No. Day-0 requires full commitment. 90 days is not a lot of time to build a company. We need your full focus and energy.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span class="font-semibold">Where are you based?</span>
+                        <div class="faq-icon"></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="px-6 pb-6 text-gray-400">
+                            We're remote-first with a hub in Berlin. Our solopreneurs work from anywhere, but we gather regularly for sprints and strategy sessions.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA -->
+    <section class="section py-32 relative" data-animate id="apply">
         <div class="absolute inset-0 bg-gradient-to-b from-transparent via-accent/5 to-transparent"></div>
         <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
             <h2 class="text-4xl md:text-6xl font-bold mb-6">
@@ -612,9 +622,11 @@
                 Limited spots. We're looking for exceptional operators.
             </p>
             
-            <a href="#" class="btn-primary text-xl inline-block animate-pulse-glow">
-                Apply Now →
-            </a>
+            <div class="magnetic-wrap inline-block">
+                <a href="#" class="btn btn-primary text-xl px-10 py-5 shadow-lg shadow-accent/30">
+                    Apply Now →
+                </a>
+            </div>
             
             <p class="mt-8 text-gray-500">
                 or email <a href="mailto:hello@day0foundry.com" class="text-accent hover:underline">hello@day0foundry.com</a>
@@ -622,25 +634,52 @@
         </div>
     </section>
     
-    <!-- Footer -->
-    <footer class="py-12 border-t border-white/5">
+    <!-- TEAM -->
+    <section class="section py-24 border-t border-white/5" data-animate>
         <div class="max-w-6xl mx-auto px-6">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-                <div class="flex items-center gap-2">
+            <div class="flex flex-col md:flex-row items-center gap-8 md:gap-16">
+                <div class="w-32 h-32 rounded-full bg-gradient-to-br from-accent/20 to-purple/20 flex items-center justify-center text-5xl">
+                    👤
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold mb-2">Antonius</h3>
+                    <p class="text-accent mb-4">Founder</p>
+                    <p class="text-gray-400 max-w-xl">
+                        Serial entrepreneur with a passion for building systems that scale. 
+                        Believes the future belongs to AI-native operators who can execute faster than ever before.
+                    </p>
+                    <div class="flex gap-4 mt-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FOOTER -->
+    <footer class="footer py-12 border-t border-white/5">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="footer-inner flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="footer-logo flex items-center gap-2">
                     <span class="text-2xl">⚡</span>
                     <span class="font-bold text-xl">Day-0 Foundry</span>
                 </div>
                 <div class="text-gray-500 text-sm">
                     AI-First Company Building
                 </div>
-                <div class="flex items-center gap-6">
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                <div class="footer-links flex items-center gap-6">
+                    <a href="#" class="footer-link text-gray-400 hover:text-white transition-colors">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                     </a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                    <a href="#" class="footer-link text-gray-400 hover:text-white transition-colors">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
                     </a>
-                    <a href="mailto:hello@day0foundry.com" class="text-gray-400 hover:text-white transition-colors">
+                    <a href="mailto:hello@day0foundry.com" class="footer-link text-gray-400 hover:text-white transition-colors">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                     </a>
                 </div>
@@ -651,145 +690,40 @@
         </div>
     </footer>
     
+    <!-- SCRIPTS -->
+    <!-- Lenis Smooth Scroll -->
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+    
     <!-- GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/ScrollTrigger.min.js"></script>
     
+    <!-- SplitType -->
+    <script src="https://unpkg.com/split-type@0.3.4/umd/index.min.js"></script>
+    
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Custom Scripts -->
+    <script src="js/smooth-scroll.js"></script>
+    <script src="js/magnetic.js"></script>
+    <script src="js/interactions.js"></script>
+    <script src="js/hero-3d.js"></script>
+    <script src="js/main.js"></script>
+    
     <script>
-        // Register ScrollTrigger
-        gsap.registerPlugin(ScrollTrigger);
-        
-        // Cursor glow effect
-        const cursorGlow = document.getElementById('cursorGlow');
-        document.addEventListener('mousemove', (e) => {
-            cursorGlow.style.left = e.clientX + 'px';
-            cursorGlow.style.top = e.clientY + 'px';
-        });
-        
-        // Hero animations
-        gsap.from('.hero-title', {
-            opacity: 0,
-            y: 50,
-            duration: 1,
-            delay: 0.2,
-            ease: 'power3.out'
-        });
-        
-        gsap.from('.hero-subtitle', {
-            opacity: 0,
-            y: 30,
-            duration: 1,
-            delay: 0.4,
-            ease: 'power3.out'
-        });
-        
-        gsap.from('.hero-desc', {
-            opacity: 0,
-            y: 30,
-            duration: 1,
-            delay: 0.6,
-            ease: 'power3.out'
-        });
-        
-        gsap.from('.hero-cta', {
-            opacity: 0,
-            y: 30,
-            duration: 1,
-            delay: 0.8,
-            ease: 'power3.out'
-        });
-        
-        // Section reveal on scroll
-        document.querySelectorAll('.section-hidden').forEach(section => {
-            ScrollTrigger.create({
-                trigger: section,
-                start: 'top 80%',
-                onEnter: () => section.classList.add('section-visible')
-            });
-        });
-        
-        // Counter animation
-        document.querySelectorAll('.counter').forEach(counter => {
-            const target = parseInt(counter.dataset.target);
+        // Initialize 3D Hero
+        document.addEventListener('DOMContentLoaded', () => {
+            const heroCanvas = document.getElementById('heroCanvas');
+            if (heroCanvas && typeof Hero3D !== 'undefined') {
+                new Hero3D(heroCanvas);
+            }
             
-            ScrollTrigger.create({
-                trigger: counter,
-                start: 'top 80%',
-                onEnter: () => {
-                    gsap.to(counter, {
-                        innerHTML: target,
-                        duration: 2,
-                        ease: 'power2.out',
-                        snap: { innerHTML: 1 }
-                    });
-                }
-            });
-        });
-        
-        // Staggered card animations
-        gsap.utils.toArray('.glow-border').forEach((card, i) => {
-            gsap.from(card, {
-                scrollTrigger: {
-                    trigger: card,
-                    start: 'top 85%'
-                },
-                opacity: 0,
-                y: 30,
-                duration: 0.6,
-                delay: i * 0.1,
-                ease: 'power2.out'
-            });
-        });
-        
-        // Timeline items
-        gsap.utils.toArray('.timeline-item').forEach((item, i) => {
-            gsap.from(item, {
-                scrollTrigger: {
-                    trigger: item,
-                    start: 'top 80%'
-                },
-                opacity: 0,
-                x: -30,
-                duration: 0.6,
-                delay: i * 0.2,
-                ease: 'power2.out'
-            });
-        });
-        
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
-        
-        // Mobile menu (basic toggle)
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        mobileMenuBtn?.addEventListener('click', () => {
-            // Add mobile menu logic here
-            alert('Mobile menu coming soon!');
-        });
-        
-        // 3D tilt effect for cards
-        document.querySelectorAll('.tilt-card').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                const rotateX = (y - centerY) / 20;
-                const rotateY = (centerX - x) / 20;
-                
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+            // FAQ Toggle
+            document.querySelectorAll('.faq-question').forEach(q => {
+                q.addEventListener('click', () => {
+                    q.closest('.faq-item').classList.toggle('open');
+                });
             });
         });
     </script>
